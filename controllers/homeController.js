@@ -143,8 +143,10 @@ module.exports.workerRender = async function (req, res, next) {
     const onlyforThisworker = (task) => {
         return task.worker == id;
     }
+    console.log(onlyforThisworker);
     const newtasks = tasks.filter(onlyforThisworker);
-    return res.render('workerProfile', { tasks: tasks });
+    console.log(newtasks);
+    return res.render('workerProfile', { tasks: newtasks });
 };
 module.exports.handleFeedback = async function (req, res) {
     console.log(req.body);
@@ -182,6 +184,10 @@ module.exports.doneWork = async function (req, res) {
 
     const workerid = task.worker;
     const reqWoker = await Worker.findById({ _id: workerid });
+    if (!reqWoker) {
+        await Tasks.findByIdAndDelete(id);
+        return res.redirect('back');
+    }
     reqWoker.tasks = reqWoker.tasks.filter((task) => {
         return task != id
     })
@@ -189,5 +195,6 @@ module.exports.doneWork = async function (req, res) {
     await Tasks.findOneAndDelete({ _id: id });
     console.log(reqWoker.tasks);
     return res.render('loginWorker');
+
 
 }
