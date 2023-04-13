@@ -137,10 +137,11 @@ module.exports.loginPosts = async function (req, res, next) {
 ////////////////////////////////////////////////////////////////////
 module.exports.workerRender = async function (req, res, next) {
 
+    const id = req.params.id;
     const tasks = await Tasks.find({}).lean();
     console.log(tasks);
     const onlyforThisworker = (task) => {
-        return task.worker == user._id;
+        return task.worker == id;
     }
     const newtasks = tasks.filter(onlyforThisworker);
     return res.render('workerProfile', { tasks: tasks });
