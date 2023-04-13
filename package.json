@@ -1,0 +1,22 @@
+{
+  "name": "minorproject",
+  "version": "1.0.0",
+  "description": "Web application for organizing tasks to all the fellow workds",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "mogoose": "^0.0.1-security",
+    "mongoose": "^6.9.1",
+    "nodemon": "^2.0.20",
+    "openai": "^3.2.1",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0"
+  }
+}

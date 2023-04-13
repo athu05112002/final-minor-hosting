@@ -1,0 +1,27 @@
+<!-- worker-profile.ejs -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Worker Profile</title>
+</head>
+
+<body>
+    <h1>Tasks Assigned to You</h1>
+    <ul>
+        <% tasks.forEach(task=> { %>
+            <li>
+                <h2>
+                    <%= task.title %>
+                </h2>
+                <p>
+                    <%= task.description %>
+                </p>
+                <p>Status: <%= task.status %>
+                </p>
+            </li>
+            <% }) %>
+    </ul>
+</body>
+
+</html>
