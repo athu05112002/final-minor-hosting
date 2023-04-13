@@ -14,6 +14,6 @@ Router.post('/register-s', homeController.registerPosts);
 Router.get('/login-s', homeController.loginGets);
 Router.post('/login-s', homeController.loginPosts);
 Router.post('/', homeController.handleFeedback);
-Router.get('/:id', homeController.doneWork);
+Router.get('/string/:id', homeController.doneWork);
 Router.get('/workerProfile', homeController.workerRender)
 module.exports = Router;
