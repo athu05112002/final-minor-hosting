@@ -24,8 +24,16 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-3">
-                one of the three
+            <div class="col-3 d-flex justify-content-between align-items-center" style="min-height: 100vh;">
+                <div class="text-center"
+                    style="border: 2px solid rgb(220, 220, 219); padding: 10px; border-radius: 4px;">
+                    <h1 style="font-family: 'Courier New', Courier, monospace;">Name:<%=worker.name %>
+                    </h1>
+                    <h2 style="font-family: 'Courier New', Courier, monospace;">Contact:<%= worker.contact %>
+                    </h2>
+                </div>
+
+
             </div>
 
             <div class="col-9">

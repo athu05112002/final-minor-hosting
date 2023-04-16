@@ -67,7 +67,8 @@ module.exports.loginPostw = async function (req, res) {
     console.log(tasks);
     if (req.body.password == user.password) {
         return res.render('workerProfile', {
-            tasks: newtasks
+            tasks: newtasks,
+            worker: user
         })
     }
     return res.rendirect('/registerWorker');
@@ -118,8 +119,10 @@ module.exports.loginPosts = async function (req, res, next) {
             if (req.body.password == supervisor.password) {
                 const workers = await Worker.find({}).lean();
                 // console.log("here is what you are looking for >........>>>>> " + workers);
+                const user = supervisor
                 return res.render('superProfile', {
-                    workers: workers
+                    workers: workers,
+                    user: supervisor
                 });
             }
         }
@@ -146,7 +149,8 @@ module.exports.workerRender = async function (req, res, next) {
     console.log(onlyforThisworker);
     const newtasks = tasks.filter(onlyforThisworker);
     console.log(newtasks);
-    return res.render('workerProfile', { tasks: newtasks });
+    const user = await Worker.findById(id);
+    return res.render('workerProfile', { tasks: newtasks, worker: user });
 };
 module.exports.handleFeedback = async function (req, res) {
     console.log(req.body);
