@@ -1,6 +1,12 @@
 const Worker = require('../models/worker');
 const Supervisor = require('../models/Supervisor');
 const Tasks = require('../models/Tasks');
+const { Configuration, OpenAIApi } = require("openai");
+
+const configuration = new Configuration({
+    apiKey: "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",
+});
+const openai = new OpenAIApi(configuration);
 
 
 module.exports.registerGetw = (req, res) => {
@@ -11,10 +17,10 @@ module.exports.registerGetw = (req, res) => {
 module.exports.registerPostw = async (req, res) => {
 
     let worker = req.body;
-    console.log(worker);
+    // console.log(worker);
     try {
         const worker = await Worker.create(req.body);
-        console.log(worker);
+        // console.log(worker);
         let minindex = 0;
         const supers = await Supervisor.find({}).lean();
         let val = 100000;
@@ -24,15 +30,15 @@ module.exports.registerPostw = async (req, res) => {
                 minindex = i;
             }
         }
-        console.log(supers[minindex]);
+        // console.log(supers[minindex]);
         const reqSuper = await Supervisor.findOne({ _id: supers[minindex]._id });
 
         reqSuper.workers.push(worker._id);
-        console.log(reqSuper + "this hs what you are looking for");
+        // console.log(reqSuper + "this hs what you are looking for");
         await reqSuper.save();
     }
     catch (err) {
-        console.log("error in creating worker");
+        // console.log("error in creating worker");
     }
 
     return res.render('loginWorker');
@@ -42,29 +48,29 @@ module.exports.loginGetw = function (req, res) {
     return res.render('loginWorker');
 }
 module.exports.loginPostw = async function (req, res) {
-    console.log(req.body);
+    // console.log(req.body);
     const user = await Worker.findOne({ contact: req.body.contact }).lean();
     if (!user) {
-        console.log("user not found");
+        // console.log("user not found");
         return res.render('loginWorker');
     }
     const tasks = await Tasks.find({}).lean();
 
     req.user = user;
 
-    console.log(user);
+    // console.log(user);
 
     let newtasks = [];
     for (let i in tasks) {
-        console.log(i);
-        console.log(tasks[i]);
-        console.log(user._id);
+        // console.log(i);
+        // console.log(tasks[i]);
+        // console.log(user._id);
         if (tasks[i].worker.toString() == user._id.toString()) {
             newtasks.push(tasks[i]);
         }
     }
-    console.log(newtasks);
-    console.log(tasks);
+    // console.log(newtasks);
+    // console.log(tasks);
     if (req.body.password == user.password) {
         return res.render('workerProfile', {
             tasks: newtasks,
@@ -84,16 +90,16 @@ module.exports.registerGets = (req, res) => {
     return res.render('registerSuper');
 }
 module.exports.registerPosts = async (req, res) => {
-    console.log("hello");
-    console.log(req.body);
+    // console.log("hello");
+    // console.log(req.body);
     try {
         await Supervisor.create(req.body, function (err, worker) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 return res.render('registerSuper');
             }
             else {
-                console.log("successfully registered supervisor");
+                // console.log("successfully registered supervisor");
                 return res.render('loginSuper');
             }
         })
@@ -109,7 +115,7 @@ module.exports.loginGets = function (req, res, next) {
     return res.render('loginSuper');
 }
 module.exports.loginPosts = async function (req, res, next) {
-    console.log(req.body);
+    // console.log(req.body);
     try {
         const supervisor = await Supervisor.findOne({ contact: req.body.contact });
         if (!supervisor) {
@@ -142,20 +148,31 @@ module.exports.workerRender = async function (req, res, next) {
 
     const id = req.params.id;
     const tasks = await Tasks.find({}).lean();
-    console.log(tasks);
+    // console.log(tasks);
     const onlyforThisworker = (task) => {
         return task.worker == id;
     }
-    console.log(onlyforThisworker);
+    // console.log(onlyforThisworker);
     const newtasks = tasks.filter(onlyforThisworker);
-    console.log(newtasks);
+    // console.log(newtasks);
     const user = await Worker.findById(id);
     return res.render('workerProfile', { tasks: newtasks, worker: user });
 };
 module.exports.handleFeedback = async function (req, res) {
-    console.log(req.body);
+
+
+    let query = "create a task for this feedback : ";
+    query = query + req.body.feedback;
+    let newstr = " task should not contain any special characters";
+    query = query + newstr;
+    const completion = await openai.createCompletion({
+        model: "text-davinci-003",
+        prompt: query,
+    });
+    console.log(completion.data.choices[0].text);
+    // console.log(req.body);
     const workers = await Worker.find({});
-    console.log(workers);
+    // console.log(workers);
     let minindex = 0;
     let val = 10000;
     let reqid = 0;
@@ -166,15 +183,17 @@ module.exports.handleFeedback = async function (req, res) {
             reqid = workers[i]._id;
         }
     }
-    const temp = await Tasks.create({ detail: req.body.feedback, worker: reqid, status: "pending" });
-    console.log(temp);
+    let newtask = completion.data.choices[0].text
+    console.log(newtask);
+    const temp = await Tasks.create({ detail: newtask, worker: reqid, status: "pending" });
+    // console.log(temp);
     workers[minindex].tasks.push(temp);
     let reqWoker = await Worker.findOne({ _id: reqid });
     reqWoker.tasks.push(temp);
     reqWoker.save();
     // temp.worker = reqWoker.reqid;
     temp.save();
-    console.log(reqWoker);
+    // console.log(reqWoker);
 
     return res.render('home');
 
@@ -197,7 +216,7 @@ module.exports.doneWork = async function (req, res) {
     })
     reqWoker.save();
     await Tasks.findOneAndDelete({ _id: id });
-    console.log(reqWoker.tasks);
+    // console.log(reqWoker.tasks);
     return res.render('loginWorker');
 
 
