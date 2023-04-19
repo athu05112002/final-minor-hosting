@@ -1,7 +1,9 @@
 const Worker = require('../models/worker');
 const Supervisor = require('../models/Supervisor');
 const Tasks = require('../models/Tasks');
+const sqlite3 = require('sqlite3').verbose();
 const { Configuration, OpenAIApi } = require("openai");
+let db = new sqlite3.Database('./minorproject.sqlite');
 
 const configuration = new Configuration({
     apiKey: "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",
@@ -17,6 +19,15 @@ module.exports.registerGetw = (req, res) => {
 module.exports.registerPostw = async (req, res) => {
 
     let worker = req.body;
+    worker.taskarray = '';
+    db.run(`INSERT INTO worker (name, contact, taskarray) VALUES (?, ?, ?)`,
+        [worker.name, worker.contact, worker.taskarray], (err) => {
+            if (err) {
+                console.error(err.message);
+            }
+            console.log(`New worker has been added with ID ${this.lastID}`);
+        });
+
     // console.log(worker);
     try {
         const worker = await Worker.create(req.body);
@@ -183,7 +194,8 @@ module.exports.handleFeedback = async function (req, res) {
             reqid = workers[i]._id;
         }
     }
-    let newtask = completion.data.choices[0].text
+    let newtask = completion.data.choices[0].text;
+
     console.log(newtask);
     const temp = await Tasks.create({ detail: newtask, worker: reqid, status: "pending" });
     // console.log(temp);
@@ -194,6 +206,39 @@ module.exports.handleFeedback = async function (req, res) {
     // temp.worker = reqWoker.reqid;
     temp.save();
     // console.log(reqWoker);
+
+    db.get(`SELECT * FROM worker WHERE name = ?`, [reqWoker.name], (err, row) => {
+        if (err) {
+            console.error(err.message);
+        } else if (!row) {
+            console.log(`No worker found with name ${reqWoker.name}`);
+        } else {
+            let taskarray = [];
+            try {
+                taskarray = JSON.parse(row.taskarray);
+            } catch (e) {
+                console.error(`Error parsing taskarray for worker ${row.name}: ${e.message}`);
+            }
+
+            let taskstring = taskarray.toString();
+            let crtask = newtask;
+            taskstring = taskstring + ',' + crtask;
+            db.run(`UPDATE worker SET taskarray = ? WHERE name = ?`, [taskstring, reqWoker.name], function (err) {
+                if (err) {
+                    console.error(err.message);
+                } else if (this.changes === 0) {
+                    console.log(`No worker found with name ${reqWoker.name}`);
+                } else {
+                    console.log(`Updated taskarray for worker ${reqWoker.name}: ${taskstring}`);
+                }
+            });
+
+            console.log(`Name: ${row.name}`);
+            console.log(`Contact: ${row.contact}`);
+            console.log(`Task Array: ${taskarray}`);
+        }
+    });
+
 
     return res.render('home');
 
