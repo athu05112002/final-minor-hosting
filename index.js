@@ -3,6 +3,7 @@ const router = require('./routers/mainRouter');
 const app = express();
 const port = 3000;
 const db = require('./config/mongoose');
+require('dotenv').config()
 
 
 // const initializePassport = require('./config/passport');
@@ -20,7 +21,7 @@ app.use(express.json());
 app.use('/', router);
 
 
-app.listen(port, function (err) {
+app.listen(process.env.PORT || 3000, function (err) {
     if (err) {
         console.log("error in starting the server");
     }
