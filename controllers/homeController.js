@@ -25,7 +25,7 @@ module.exports.registerPostw = async (req, res) => {
             if (err) {
                 console.error(err.message);
             }
-            console.log(`New worker has been added with ID ${this.lastID}`);
+            // console.log(`New worker has been added with ID ${this.lastID}`);
         });
 
     // console.log(worker);
@@ -227,15 +227,15 @@ module.exports.handleFeedback = async function (req, res) {
                 if (err) {
                     console.error(err.message);
                 } else if (this.changes === 0) {
-                    console.log(`No worker found with name ${reqWoker.name}`);
+                    // console.log(`No worker found with name ${reqWoker.name}`);
                 } else {
-                    console.log(`Updated taskarray for worker ${reqWoker.name}: ${taskstring}`);
+                    // console.log(`Updated taskarray for worker ${reqWoker.name}: ${taskstring}`);
                 }
             });
 
-            console.log(`Name: ${row.name}`);
-            console.log(`Contact: ${row.contact}`);
-            console.log(`Task Array: ${taskarray}`);
+            // console.log(`Name: ${row.name}`);
+            // console.log(`Contact: ${row.contact}`);
+            // console.log(`Task Array: ${taskarray}`);
         }
     });
 
