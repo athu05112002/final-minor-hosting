@@ -13,7 +13,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
-            background-image: url(https://images.unsplash.com/uploads/1412026095116d2b0c90e/3bf33993?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1167&q=80);
+            background-image: url("https://i.ibb.co/Lxcp1YF/worker-Profile-Page.jpg");
             background-repeat: no-repeat;
             background-size: cover;
         }
@@ -26,10 +26,12 @@
         <div class="row">
             <div class="col-3 d-flex justify-content-between align-items-center" style="min-height: 100vh;">
                 <div class="text-center"
-                    style="border: 2px solid rgb(220, 220, 219); padding: 10px; border-radius: 4px;">
-                    <h1 style="font-family: 'Courier New', Courier, monospace;">Name:<%=worker.name %>
+                    style="border: 2px solid rgb(220, 220, 219); padding: 10px; border-radius: 8px; color: antiquewhite;">
+                    <h1 style="font-family: 'Courier New', Courier, monospace; font-weight: bold;">Name:<%=worker.name
+                            %>
                     </h1>
-                    <h2 style="font-family: 'Courier New', Courier, monospace;">Contact:<%= worker.contact %>
+                    <h2 style="font-family: 'Courier New', Courier, monospace; font-weight: bold;">Contact:<%=
+                            worker.contact %>
                     </h2>
                 </div>
 
@@ -41,7 +43,8 @@
                     <% for(let task of tasks) { %>
                         <div>
                             <a href="/string/<%=task._id%>"
-                                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                                style="background-color: cornsilk;">
                                 <%= task.detail %>
                                     <button type="button" class="btn btn-success"><i class="fa fa-check"
                                             aria-hidden="true"></i></button>

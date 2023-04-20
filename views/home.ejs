@@ -6,7 +6,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url("https://images.unsplash.com/photo-1568832359672-e36cf5d74f54?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8N3x8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=60");
+            background-image: url("https://i.ibb.co/Qv2MkZ9/homePage.jpg");
             background-repeat: no-repeat;
             background-size: cover;
 
@@ -38,6 +38,9 @@
             border-radius: 5px;
             border: none;
             margin-bottom: 20px;
+            background: transparent;
+            font-size: 2rem;
+
         }
 
         input[type="submit"] {
@@ -75,8 +78,12 @@
             justify-content: center;
             align-items: center;
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-            color: palegreen;
+            color: black;
 
+        }
+
+        #feedbackText {
+            font-size: 2rem;
         }
 
         #navbar {
@@ -107,7 +114,7 @@
 
 
     <form id="formid" method="post" action="/">
-        <label for="feedback">Feedback:</label>
+        <label for="feedback" id="feedbackText">Feedback:</label>
         <textarea id="feedback" name="feedback" required></textarea>
         <br>
         <input type="submit" value="Submit">

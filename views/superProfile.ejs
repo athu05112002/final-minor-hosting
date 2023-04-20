@@ -12,30 +12,38 @@
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <style>
+        body {
+            background-image: url("https://i.ibb.co/jwSVRzb/super-Profile.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
+
 </head>
 
-<body
-    style="margin: 0; background-image: url(https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjN8fHdoaXRlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60); background-size: cover; background-repeat: no-repeat;">
+<body style="margin: 0; background-size: cover; background-repeat: no-repeat;">
     <div class="container">
         <div class="row">
-            <div class="col-3 d-flex justify-content-between align-items-center"
-                style="min-height: 100vh; background-image: url(https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjN8fHdoaXRlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60);">
+            <div class="col-3 d-flex justify-content-between align-items-center" style="min-height: 100vh;">
                 <div class="text-center"
                     style="border: 2px solid rgb(220, 220, 219); padding: 10px; border-radius: 4px;">
-                    <h1 style="font-family: 'Courier New', Courier, monospace;">Name:<%=user.name %>
+                    <h1 style="font-family: 'Courier New', Courier, monospace; font-weight: bold; color:whitesmoke">
+                        Name:
+                        <%=user.name %>
                     </h1>
-                    <h2 style="font-family: 'Courier New', Courier, monospace;">Contact:<%= user.contact %>
+                    <h2 style="font-family: 'Courier New', Courier, monospace; color:whitesmoke; font-weight: bold;">
+                        Contact:<%= user.contact %>
                     </h2>
                 </div>
 
 
             </div>
             <div class="col-9">
-                <div class="list-group"
-                    style="background-image: url(https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjN8fHdoaXRlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60);">
+                <div class="list-group">
                     <% for(i in workers) {%>
                         <a href="/workerProfile/<%=workers[i]._id%>" class="list-group-item list-group-item-action d-flex justify-content-between
-                                                    align-items-center">
+                                                    align-items-center" style="background: cornsilk;">
                             <div class="list-group-item list-group-item-action d-flex justify-content-between
                                                     align-items-center">
                                 <%=workers[i].name %>
