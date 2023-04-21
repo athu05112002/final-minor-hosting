@@ -1,8 +1,10 @@
 const express = require('express');
-const router = require('./routers/mainRouter');
+const path = require('path');
+const router = require(path.join(__dirname, 'routers', 'mainRouter'));
+
 const app = express();
 const port = 3000;
-const db = require('./config/mongoose');
+const db = require(path.join(__dirname, 'config', 'mongoose'));
 
 
 
