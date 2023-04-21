@@ -1,6 +1,9 @@
 const express = require('express');
 const passport = require('passport');
-const homeController = require('../controllers/homeController');
+const path = require('path');
+const homeControllerPath = path.join(__dirname, '../controllers/homeController');
+const homeController = require(homeControllerPath);
+
 const Router = express.Router();
 Router.get('/', (req, res) => {
     return res.render('home');

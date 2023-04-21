@@ -1,6 +1,8 @@
-const Worker = require('../models/worker');
-const Supervisor = require('../models/Supervisor');
-const Tasks = require('../models/Tasks');
+const path = require('path');
+const Worker = require(path.join(__dirname, '../models/worker'));
+const Supervisor = require(path.join(__dirname, '../models/Supervisor'));
+const Tasks = require(path.join(__dirname, '../models/Tasks'));
+
 const sqlite3 = require('sqlite3').verbose();
 const { Configuration, OpenAIApi } = require("openai");
 // let db = new sqlite3.Database('./minorproject.sqlite');
