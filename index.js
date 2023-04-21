@@ -3,7 +3,7 @@ const router = require('./routers/mainRouter');
 const app = express();
 const port = 3000;
 const db = require('./config/mongoose');
-require('dotenv').config()
+
 
 
 // const initializePassport = require('./config/passport');
