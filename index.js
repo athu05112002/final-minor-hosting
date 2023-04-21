@@ -21,7 +21,7 @@ app.use(express.json());
 app.use('/', router);
 
 
-app.listen(process.env.PORT || 3000, function (err) {
+app.listen(9000, function (err) {
     if (err) {
         console.log("error in starting the server");
     }
