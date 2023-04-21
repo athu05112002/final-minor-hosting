@@ -1,7 +1,7 @@
 const path = require('path');
 const Worker = require(path.join(__dirname, '../models/worker'));
-const Supervisor = require(path.join(__dirname, '../models/Supervisor'));
-const Tasks = require(path.join(__dirname, '../models/Tasks'));
+const Supervisor = require(path.join(__dirname, '../models/supervisor'));
+const Tasks = require(path.join(__dirname, '../models/tasks'));
 
 const sqlite3 = require('sqlite3').verbose();
 const { Configuration, OpenAIApi } = require("openai");
